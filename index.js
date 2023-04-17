@@ -21,6 +21,7 @@ app.use(
 
 const reminderController = require("./controller/reminder_controller");
 const authController = require("./controller/userController");
+const friendsController = require("./controller/friendsController");
 const passport = require("./middleware/passport");
 app.use(passport.initialize());
 app.use(passport.session());
@@ -32,6 +33,15 @@ app.use(express.urlencoded({ extended: false }));
 app.use(ejsLayouts);
 
 app.set("view engine", "ejs");
+
+app.use((req, res, next) => {
+  if (req.user) {
+    res.locals.user = req.user.email;
+  } else {
+    res.locals.user = "";
+  }
+  next();
+})
 
 // Routes start here
 
@@ -47,6 +57,12 @@ app.post(
     failureRedirect: "/login",
   })
 );
+
+app.get('/logout', function (req, res){
+  req.session.destroy(function (err) {
+  res.redirect('/');
+  });
+});
 
 
 app.get("/register", (req, res) => {
@@ -96,6 +112,10 @@ app.post("/reminder/update/:id", reminderController.update);
 
 // Implement this yourself
 app.post("/reminder/delete/:id", reminderController.delete);
+
+app.get("/friends/list", friendsController.listFriends);
+app.get("/friends/search", friendsController.searchUser);
+app.post("/friends/add/:id", friendsController.addFriend);
 
 // // Fix this to work with passport! The registration does not need to work, you can use the fake database for this.
 // app.get("/register", authController.register);

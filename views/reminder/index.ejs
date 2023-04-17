@@ -1,20 +1,41 @@
 <div class="container">
   <h1 class="page-header">Reminders</h1>
 
-<ul class="list-group">
-  <% reminders.forEach(function (reminderItem) { %>
-    <li class="list-group-item">
-      <strong><%= reminderItem.title %>: </strong>
-      <%= reminderItem.description %>
-      || Completed:
-      <% if (reminderItem.completed == true) { %>
-        <span class="badge badge-success">True</span>
-      <% } else if (reminderItem.completed == false) { %>
-        <span class="badge badge-danger">False</span>
-      <% } %>
-      <a class="pull-right" href=<%= "/reminder/" + reminderItem.id %>>View</a>
-    </li>
-  <% }) %>
-</ul>
+  <h2>My Reminders</h2>
+  <ul class="list-group">
+    <% reminders.forEach(function (reminderItem) { %>
+      <li class="list-group-item">
+        <strong><%= reminderItem.title %>: </strong>
+        <%= reminderItem.description %>
+        || Completed:
+        <% if (reminderItem.completed == true) { %>
+          <span class="badge badge-success">True</span>
+        <% } else if (reminderItem.completed == false) { %>
+          <span class="badge badge-danger">False</span>
+        <% } %>
+        <a class="pull-right" href=<%= "/reminder/" + reminderItem.id %>>View</a>
+      </li>
+    <% }) %>
+  </ul>
 
-</div>
+  <% if (friendsReminders.length > 0) { %>
+    <hr>
+    <h2>My Friends' Reminders</h2>
+    <ul class="list-group">
+      <% friendsReminders.forEach(function(friend) { %>
+        <li class="list-group-item">
+          <strong><%= friend.name %>: </strong>
+          <% friend.reminders.forEach(function(reminder) { %>
+            <p><strong><%= reminder.title %>: </strong><%= reminder.description %>
+            || Completed:
+            <% if (reminder.completed) { %>
+              <span class="badge badge-success">True</span>
+            <% } else { %>
+              <span class="badge badge-danger">False</span>
+            <% } %></p>
+          <% }) %>
+        </li>
+      <% }) %>
+    </ul>
+  <% } %>
+  

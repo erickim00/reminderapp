@@ -3,24 +3,27 @@ const database = [
       id: 1,
       name: "Jimmy Smith",
       email: "jimmy123@gmail.com",
-      password: "jimmy123!",
+      password: "jimmy123!", 
       reminders: [
-      {id: 1, title: "something", completed: false, description: "something"}, 
-      {id: 2, title: "something2", completed: true, description: "something2"}]
+      {id: 1, title: "something", completed: false, description: "something",  subtasks: ["do also", "as well as this"], tags: ["groceries", "chore"], date: "2023-04-25"}, 
+      {id: 2, title: "something2", completed: true, description: "something2"}],
+      friends: [],
     },
     {
       id: 2,
       name: "Johnny Doe",
       email: "johnny123@gmail.com",
       password: "johnny123!",
-      reminders: []
+      reminders: [],
+      friends: [],
     },
     {
       id: 3,
       name: "Jonathan Chen",
       email: "jonathan123@gmail.com",
       password: "jonathan123!",
-      reminders: [{id: 1, title: "DEEZ NUTz", completed: false, description: "something"}]
+      reminders: [{id: 1, title: "something else", completed: false, description: "something"}],
+      friends : [],
     },
   ];
   
@@ -38,6 +41,13 @@ const database = [
         return user;
       }
       throw new Error(`Couldn't find user with id: ${id}`);
+    },
+    searchUser: (search) => {
+      return database.filter(
+        (user) =>
+        user.name.toLowerCase().includes(search.toLowerCase()) ||
+        user.email.toLowerCase().includes(search.toLowerCase())
+      );
     },
   };
   

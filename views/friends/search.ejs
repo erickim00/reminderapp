@@ -1,0 +1,27 @@
+<div class="container">
+    <h1 class="page-header">Search for Friends</h1>
+    <form method="GET">
+      <div class="form-group">
+        <label for="search">Search</label>
+        <input type="text" class="form-control" name="q" id="search" placeholder="Search...">
+      </div>
+      <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+    <% if (users && users.length > 0) { %>
+      <h2 class="mt-5">Search Results:</h2>
+      <ul class="list-group">
+        <% users.forEach(function (user) { %>
+          <li class="list-group-item">
+            <h4><%= user.name %></h4>
+            <p><strong>Email:</strong> <%= user.email %></p>
+            <form action="/friends/add/<%= user.id %>" method="POST">
+              <button type="submit" class="btn btn-primary">Add Friend</button>
+            </form>
+          </li>
+        <% }) %>
+      </ul>
+    <% } else if (users && users.length === 0) { %>
+      <p>No results found!</p>
+    <% } %>
+  </div>
+  

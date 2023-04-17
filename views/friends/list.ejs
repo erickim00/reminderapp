@@ -1,0 +1,21 @@
+<div class="container">
+  <h1 class="page-header">My Friends</h1>
+  <% if (friends.length === 0) { %>
+    <p>You do not have any friends yet!</p>
+  <% } else { %>
+    <% if (friendAdded) { %>
+      <div class="alert alert-success" role="alert">
+        Friend added successfully!
+      </div>
+    <% } %>
+    <ul class="list-group">
+      <% friends.forEach(function (friend) { %>
+        <li class="list-group-item">
+          <h4><%= friend.name %></h4>
+          <p><strong>Email:</strong> <%= friend.email %></p>
+        </li>
+      <% }) %>
+    </ul>
+  <% } %>
+  <a href="/friends/search" class="btn btn-primary">Add Friend</a>
+</div>
